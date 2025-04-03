@@ -37,36 +37,33 @@ $submenu2 = [
 
 $menu = [
     [
-        'text' => '<i class="fas fa-home"></i> Home',
-        'url' => 'home',
+        'text' => 'Pré-reserva',
+        'url' => 'form',
+        'can' => 'user'
     ],
     [
-        # este item de menu será substituido no momento da renderização
-        'key' => 'menu_dinamico',
+        'text' => 'Minhas pré-reservas',
+        'url' => 'list-user',
+        'can' => 'user'
     ],
     [
-        'text' => 'Drop Down',
-        'submenu' => $submenu2,
-        'can' => '',
+        'text' => 'Pré-reservas em meu nome',
+        'url' => 'list-user-related',
+        'can' => 'user'
     ],
     [
-        'text' => 'Está logado',
-        'url' => config('app.url') . '/logado', // com caminho absoluto
-        'can' => 'user',
-    ],
-    [
-        'text' => 'Menu gerente',
-        'url' => 'gerente',
-        'can' => 'gerente',
-    ],
-    [
-        'text' => 'Menu admin',
-        'submenu' => $admin,
-        'can' => 'admin',
+        'text' => 'Lista de pré-reservas',
+        'url' => 'list-all',
+        'can' => 'manager'
     ],
 ];
 
 $right_menu = [
+    [
+        'text' => '<span class="text-danger">Formulários</span>',
+        'url' => 'uspdev-forms/form-definitions',
+        'can' => 'admin'
+    ],
     [
         // menu utilizado para views da biblioteca senhaunica-socialite.
         'key' => 'senhaunica-socialite',
@@ -74,13 +71,7 @@ $right_menu = [
     [
         'key' => 'laravel-tools',
     ],
-    [
-        'text' => '<i class="fas fa-cog"></i>',
-        'title' => 'Configurações',
-        'target' => '_blank',
-        'url' => config('app.url') . '/item1',
-        'align' => 'right',
-    ],
+    
 ];
 
 
