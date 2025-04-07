@@ -86,7 +86,7 @@ class PreReservaController extends Controller
         $form = new Form($config);
         $form->handleSubmission($request, $id);
 
-        return redirect(route('list-user'));
+        return redirect(route('form.show', ['id' => $id]));
     }
 
     public static function deleteSubmission($id){

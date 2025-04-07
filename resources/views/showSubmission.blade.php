@@ -15,7 +15,7 @@
           @endphp
 
           <div class="d-flex">
-            <a href="{{ route('list-user') }}" class="btn btn-secondary btn-sm mr-2">
+            <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm mr-2">
               <i class="fas fa-arrow-left"></i> Voltar
             </a>
             <a href="{{ route('form.edit', ['id' => $submission->id]) }}" class="btn btn-primary btn-sm mr-2">
