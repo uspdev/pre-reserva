@@ -106,13 +106,13 @@
               </div>
             </div>
           @else
-            <div class="mt-2">
+            <div>
               @if ($aceito === 'not-avaliated')
-                <span class="badge text-light bg-secondary">Não avaliado</span>
+                <span class="badge text-light bg-secondary p-2">Não avaliado</span>
               @elseif($aceito === 'accepted')
-                <span class="badge text-light bg-success">Aceito - {{ ucfirst($sala) }}</span>
+                <span class="badge text-light bg-success p-2">Aceito - {{ ucfirst($sala) }}</span>
               @elseif($aceito === 'not-accepted')
-                <span class="badge bg-warning">Negado</span>
+                <span class="badge bg-warning p-2">Negado</span>
               @endif
             </div>
           @endcan
