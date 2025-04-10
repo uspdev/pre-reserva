@@ -7,7 +7,7 @@
       <th>Horário</th>
       <th>Dias da semana</th>
       <th>Software utilizado</th>
-      <th>Quantidade de alunos</th>
+      <th>Qt alunos</th>
       <th>Semestre</th>
       <th>Criado em</th>
       <th>Status</th>
@@ -41,7 +41,8 @@
         </td>
         <td>
           @if (isset($submission->data['software_link']))
-            <a href="{{ $submission->data['software_link'] }}" target="_blank">{{ $submission->data['software_utilizado'] }}</a>
+            <a href="{{ $submission->data['software_link'] }}"
+              target="_blank">{{ $submission->data['software_utilizado'] }}</a>
           @else
             {{ $submission->data['software_utilizado'] }}
           @endif
@@ -50,46 +51,69 @@
         <td>{{ $submission->data['semestre'] }}</td>
         <td>{{ \Carbon\Carbon::parse($submission->created_at)->format('d/m/Y H:i') }}</td>
         <td>
-          <div>
-            @php
-              $aceito = $submission->data['aceito'] ?? 'not-avaliated';
-              if(\Illuminate\Support\Str::beforeLast($aceito, '-') === 'accepted'){
+          @php
+            $aceito = $submission->data['aceito'] ?? 'not-avaliated';
+            if (\Illuminate\Support\Str::beforeLast($aceito, '-') === 'accepted') {
                 $sala = \Illuminate\Support\Str::afterLast($aceito, '-');
                 $aceito = \Illuminate\Support\Str::beforeLast($aceito, '-');
-              }
-            @endphp
-
-            @if ($aceito === 'not-avaliated')
-              <span class="badge text-light bg-secondary">Não avaliado</span>
-            @elseif($aceito === 'accepted')
-              <span class="badge text-light bg-success">Aceito - {{ ucfirst($sala) }}</span>
-            @elseif($aceito === 'not-accepted')
-              <span class="badge bg-warning">Negado</span>
-            @endif
-          </div>
+            }
+          @endphp
 
           @can('manager')
-            <div class="d-flex mt-2">
-              <form action="{{ route('form.accept', ['id' => $submission->id]) }}" method="POST" class="d-flex" id="form-{{ $submission->id }}">
-                @csrf
-                @method('POST')
+            <div class="dropdown mt-2">
+              @if ($aceito === 'not-avaliated')
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Não Avaliado
+                @elseif($aceito === 'accepted')
+                  <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Aceito - {{ ucfirst($sala) }}
+                  @elseif($aceito === 'not-accepted')
+                    <button class="btn btn-warning btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Negado
+              @endif
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <form action="{{ route('form.accept', ['id' => $submission->id]) }}" method="POST"
+                    class="d-flex flex-column">
+                    @csrf
+                    @method('POST')
+                    @if ($aceito !== 'accepted')
+                      <button type="submit" name="accepted" value="accepted-g1" class="btn btn-success btn-sm m-1">
+                        <i class="fas fa-thumbs-up"></i> G1
+                      </button>
+                      <button type="submit" name="accepted" value="accepted-g2" class="btn btn-success btn-sm m-1">
+                        <i class="fas fa-thumbs-up"></i> G2
+                      </button>
+                      <button type="submit" name="accepted" value="accepted-g3" class="btn btn-success btn-sm m-1">
+                        <i class="fas fa-thumbs-up"></i> G3
+                      </button>
+                    @endif
+                    @if ($aceito === 'not-avaliated' || $aceito !== 'not-accepted')
+                      <button type="submit" name="accepted" value="not-accepted" class="btn btn-warning btn-sm m-1">
+                        <i class="fas fa-thumbs-down"></i>
+                      </button>
+                    @endif
 
-                @if ($aceito !== 'accepted')
-                  @include('partials.sala-select')
-                @endif
-
-                @if ($aceito === 'not-avaliated' || $aceito !== 'not-accepted')
-                  <button type="submit" name="accepted" value="not-accepted" class="btn btn-warning btn-sm mr-2">
-                    <i class="fas fa-thumbs-down"></i>
-                  </button>
-                @endif
-
-                @if ($aceito !== 'not-avaliated')
-                  <button type="submit" name="accepted" value="not-avaliated" class="btn btn-secondary btn-sm">
-                    <i class="fas fa-calendar-minus"></i>
-                  </button>
-                @endif
-              </form>
+                    @if ($aceito !== 'not-avaliated')
+                      <button type="submit" name="accepted" value="not-avaliated" class="btn btn-secondary btn-sm m-1">
+                        <i class="fas fa-calendar-minus"></i>
+                      </button>
+                    @endif
+                  </form>
+              </div>
+            </div>
+          @else
+            <div class="mt-2">
+              @if ($aceito === 'not-avaliated')
+                <span class="badge text-light bg-secondary">Não avaliado</span>
+              @elseif($aceito === 'accepted')
+                <span class="badge text-light bg-success">Aceito - {{ ucfirst($sala) }}</span>
+              @elseif($aceito === 'not-accepted')
+                <span class="badge bg-warning">Negado</span>
+              @endif
             </div>
           @endcan
         </td>

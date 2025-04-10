@@ -37,7 +37,7 @@ $submenu2 = [
 
 $menu = [
     [
-        'text' => 'Pré-reserva',
+        'text' => 'Nova pré-reserva',
         'url' => 'form',
         'can' => 'user'
     ],
