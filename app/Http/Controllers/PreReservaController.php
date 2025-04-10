@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Uspdev\Forms\Form;
 use Uspdev\Forms\Models\FormSubmission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class PreReservaController extends Controller
@@ -13,7 +14,7 @@ class PreReservaController extends Controller
     {
         \UspTheme::activeUrl('form');
 
-        $codpes = auth()->user()->codpes;
+        $codpes = Auth::user()->codpes;
         $form = new Form(['key' => $codpes]);
         $formHtml = $form->generateHtml('prereserva');
         
@@ -21,8 +22,9 @@ class PreReservaController extends Controller
     }
 
     public static function submission(Request $request)
-    {        
-        $form = new Form();
+    {       
+        $codpes = Auth::user()->codpes;
+        $form = new Form(['key' => $codpes]);
         $form->handleSubmission($request);
         
         return redirect(route('list-user'));
@@ -32,7 +34,7 @@ class PreReservaController extends Controller
     {
         \UspTheme::activeUrl('list-user');
 
-        $user = auth()->user();     
+        $user = Auth::user();     
         $codpes = $user->codpes;
         $form = new Form(['key' => $codpes]);
         $submissions = $form->listSubmission('prereserva');
@@ -44,7 +46,7 @@ class PreReservaController extends Controller
     {
         \UspTheme::activeUrl('list-user-related');
 
-        $user = auth()->user();     
+        $user = Auth::user();     
         $codpes = $user->codpes;
         $form = new Form(['key' => $codpes]);
         $submissions = $form->whereSubmissionContains('professor', strval($codpes));
@@ -57,7 +59,7 @@ class PreReservaController extends Controller
         \UspTheme::activeUrl('list-all');
 
         if (!Gate::allows('admin') && !Gate::allows('manager')) {
-            return response()->json(['alert-danger' => 'Você não tem permissão para acessar esta página.'], 403);
+            return redirect(route('list-user'));
         }
 
         $submissions = FormSubmission::all();
@@ -67,16 +69,29 @@ class PreReservaController extends Controller
 
     public static function showSubmission($id)
     {
+        $codpes = Auth::user()->codpes;
         $form = new Form();
         $submission = $form->getSubmission($id);
+
+        if (!Gate::allows('admin') && !Gate::allows('manager') && 
+            $submission->key != $codpes && $submission->data->professor != $codpes) {
+            return redirect(route('list-user'));
+        }
         
         return view('showSubmission', compact('submission'));
     }
 
 
     public static function editSubmission($id){
+        $codpes = Auth::user()->codpes;
         $form = new Form();
         $submission = $form->getSubmission($id);
+
+        if (!Gate::allows('admin') && !Gate::allows('manager') && 
+            $submission->key != $codpes && $submission->data->professor != $codpes) {
+            return redirect(route('list-user'));
+        }
+
         $formHtml = $form->generateHtml('prereserva', $submission);
         return view('form', compact('formHtml', 'submission'));
     }
@@ -84,6 +99,14 @@ class PreReservaController extends Controller
     public static function updateSubmission(Request $request, $id){
         $config['editable'] = true;
         $form = new Form($config);
+
+        $codpes = Auth::user()->codpes;
+        $submission = $form->getSubmission($id);
+        if (!Gate::allows('admin') && !Gate::allows('manager') && 
+            $submission->key != $codpes && $submission->data->professor != $codpes) {
+            return redirect(route('list-user'));
+        }
+
         $form->handleSubmission($request, $id);
 
         return redirect(route('form.show', ['id' => $id]));
@@ -91,14 +114,25 @@ class PreReservaController extends Controller
 
     public static function deleteSubmission($id){
         $form = new Form();
+        
+        $codpes = Auth::user()->codpes;
         $submission = $form->getSubmission($id);
+        if (!Gate::allows('admin') && !Gate::allows('manager') && 
+            $submission->key != $codpes && $submission->data->professor != $codpes) {
+            return redirect(route('list-user'));
+        }
+
         $submission->delete();
         
-        return redirect(route('list-user'));
+        return redirect(route('list-all'))->with('alert-success', 'Submissão deletada com sucesso!');
     }
 
     public function accept(Request $request, $id)
     {
+        if (!Gate::allows('admin') && !Gate::allows('manager')) {
+            return redirect(route('list-user'));
+        }
+
         $config['editable'] = true;
         $form = new Form($config);
         $submission = $form->getSubmission($id);
