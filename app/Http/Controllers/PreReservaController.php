@@ -74,7 +74,7 @@ class PreReservaController extends Controller
         $submission = $form->getSubmission($id);
 
         if (!Gate::allows('admin') && !Gate::allows('manager') && 
-            $submission->key != $codpes && $submission->data->professor != $codpes) {
+            $submission->key != $codpes && $submission->data['professor'] != $codpes) {
             return redirect(route('list-user'));
         }
         
@@ -88,7 +88,7 @@ class PreReservaController extends Controller
         $submission = $form->getSubmission($id);
 
         if (!Gate::allows('admin') && !Gate::allows('manager') && 
-            $submission->key != $codpes && $submission->data->professor != $codpes) {
+            $submission->key != $codpes && $submission->data['professor'] != $codpes) {
             return redirect(route('list-user'));
         }
 
@@ -103,7 +103,7 @@ class PreReservaController extends Controller
         $codpes = Auth::user()->codpes;
         $submission = $form->getSubmission($id);
         if (!Gate::allows('admin') && !Gate::allows('manager') && 
-            $submission->key != $codpes && $submission->data->professor != $codpes) {
+            $submission->key != $codpes && $submission->data['professor'] != $codpes) {
             return redirect(route('list-user'));
         }
 
@@ -118,7 +118,7 @@ class PreReservaController extends Controller
         $codpes = Auth::user()->codpes;
         $submission = $form->getSubmission($id);
         if (!Gate::allows('admin') && !Gate::allows('manager') && 
-            $submission->key != $codpes && $submission->data->professor != $codpes) {
+            $submission->key != $codpes && $submission->data['professor'] != $codpes) {
             return redirect(route('list-user'));
         }
 
