@@ -24,7 +24,7 @@ class PreReservaController extends Controller
     public static function submission(Request $request)
     {       
         $codpes = Auth::user()->codpes;
-        $form = new Form(['key' => $codpes]);
+        $form = new Form();
         $form->handleSubmission($request);
         
         return redirect(route('list-user'));
