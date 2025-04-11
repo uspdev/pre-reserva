@@ -93,4 +93,22 @@
 
   </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const form = document.getElementById("generatedForm");
+
+      form.addEventListener("submit", function(event) {
+        const horaInicio = document.getElementById("uspdev-forms-hora_inicio").value;
+        const horaFim = document.getElementById("uspdev-forms-hora_fim").value;
+
+        if (horaInicio && horaFim) {
+          if (horaInicio >= horaFim) {
+            alert("O horário de término deve ser após o horário de início");
+            event.preventDefault();
+          }
+        }
+      });
+    });
+  </script>
 @endsection

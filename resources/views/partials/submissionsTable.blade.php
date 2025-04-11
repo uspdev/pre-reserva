@@ -62,15 +62,15 @@
           @can('manager')
             <div class="dropdown mt-2">
               @if ($aceito === 'not-avaliated')
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                <button class="btn btn-secondary btn-sm dropdown-toggle w-100" type="button" id="dropdownMenuButton"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Não Avaliado
                 @elseif($aceito === 'accepted')
-                  <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                  <button class="btn btn-success btn-sm dropdown-toggle w-100" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Aceito - {{ ucfirst($sala) }}
                   @elseif($aceito === 'not-accepted')
-                    <button class="btn btn-warning btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"
+                    <button class="btn btn-warning btn-sm dropdown-toggle w-100" type="button" id="dropdownMenuButton"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Negado
               @endif
@@ -108,11 +108,11 @@
           @else
             <div>
               @if ($aceito === 'not-avaliated')
-                <span class="badge text-light bg-secondary p-2">Não avaliado</span>
+                <span class="badge text-light bg-secondary mt-2 p-2">Não avaliado</span>
               @elseif($aceito === 'accepted')
-                <span class="badge text-light bg-success p-2">Aceito - {{ ucfirst($sala) }}</span>
+                <span class="badge text-light bg-success mt-2 p-2">Aceito - {{ ucfirst($sala) }}</span>
               @elseif($aceito === 'not-accepted')
-                <span class="badge bg-warning p-2">Negado</span>
+                <span class="badge bg-warning mt-2 p-2">Negado</span>
               @endif
             </div>
           @endcan
@@ -122,13 +122,13 @@
             <form action="{{ route('form.delete', ['id' => $submission->id]) }}" method="POST" class="mr-2 d-flex">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger btn-sm"
+              <button type="submit" class="btn btn-danger btn-sm mt-2"
                 onclick="return confirm('Tem certeza de que deseja excluir esta pré-reserva?')">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </form>
 
-            <a href="{{ route('form.edit', ['id' => $submission->id]) }}" class="btn btn-primary btn-sm d-flex">
+            <a href="{{ route('form.edit', ['id' => $submission->id]) }}" class="btn btn-primary btn-sm mt-2 p-2 d-flex">
               <i class="fas fa-pencil-alt"></i>
             </a>
           </div>
