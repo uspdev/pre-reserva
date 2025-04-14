@@ -17,14 +17,13 @@ use Illuminate\Support\Facades\Gate;
 */
 
 Route::get('/', function () {
-    if (Gate::allows('user')) {
+    if (Gate::allows('authorizedUser')) {
         return redirect()->route('list-user-related');
     }
     else{
         return view('welcome');
     }
 });
-
 
 Route::get('/form', [PreReservaController::class, 'form'])->name('form');
 Route::post('/form', [PreReservaController::class, 'submission'])->name('submissao');

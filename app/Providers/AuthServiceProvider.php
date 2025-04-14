@@ -23,6 +23,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Gate::define('authorizedUser', function ($user) {
+            return $user->permissions()->whereIn('name', ['Servidor', 'Docente', 'Estagiario'])->exists();
+        });
     }
 }

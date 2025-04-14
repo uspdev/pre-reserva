@@ -15,6 +15,8 @@ class PreReservaController extends Controller
         \UspTheme::activeUrl('form');
 
         $codpes = Auth::user()->codpes;
+        $this->authorize('authorizedUser');
+
         $form = new Form(['key' => $codpes]);
         $formHtml = $form->generateHtml('prereserva');
         
@@ -23,7 +25,10 @@ class PreReservaController extends Controller
 
     public static function submission(Request $request)
     {       
-        $codpes = Auth::user()->codpes;
+        if(!Gate::allows('authorizedUser')){
+            return redirect(route('form'));
+        }
+        
         $form = new Form();
         $form->handleSubmission($request);
         
@@ -33,6 +38,10 @@ class PreReservaController extends Controller
     public static function listUser()
     {
         \UspTheme::activeUrl('list-user');
+
+        if(!Gate::allows('authorizedUser')){
+            return redirect(route('form'));
+        }
 
         $user = Auth::user();     
         $codpes = $user->codpes;
@@ -45,6 +54,10 @@ class PreReservaController extends Controller
     public static function listUserRelated()
     {
         \UspTheme::activeUrl('list-user-related');
+
+        if(!Gate::allows('authorizedUser')){
+            return redirect(route('form'));
+        }
 
         $user = Auth::user();     
         $codpes = $user->codpes;
@@ -82,7 +95,8 @@ class PreReservaController extends Controller
     }
 
 
-    public static function editSubmission($id){
+    public static function editSubmission($id)
+    {
         $codpes = Auth::user()->codpes;
         $form = new Form();
         $submission = $form->getSubmission($id);
@@ -96,7 +110,8 @@ class PreReservaController extends Controller
         return view('form', compact('formHtml', 'submission'));
     }
 
-    public static function updateSubmission(Request $request, $id){
+    public static function updateSubmission(Request $request, $id)
+    {
         $config['editable'] = true;
         $form = new Form($config);
 
@@ -112,7 +127,8 @@ class PreReservaController extends Controller
         return redirect(route('form.show', ['id' => $id]));
     }
 
-    public static function deleteSubmission($id){
+    public static function deleteSubmission($id)
+    {
         $form = new Form();
         
         $codpes = Auth::user()->codpes;
