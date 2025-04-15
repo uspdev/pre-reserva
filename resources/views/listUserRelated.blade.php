@@ -2,7 +2,6 @@
 
 @section('content')
   <h2>Pré-reservas em meu nome</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porttitor eu enim lacinia commodo. Aenean ut
-    nisl aliquam, dignissim lorem ut, convallis justo. Praesent sit amet semper orci.</p>
+  <p>Aqui estão listadas as pré-reservas feitas por você ou por outro servidor ou docente, para o seu uso</p>
   @include('partials.submissionsTable')
 @endsection
