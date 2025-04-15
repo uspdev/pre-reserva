@@ -39,17 +39,17 @@ $menu = [
     [
         'text' => 'Nova pré-reserva',
         'url' => 'form',
-        'can' => 'user'
+        'can' => 'authorizedUser'
     ],
     [
         'text' => 'Minhas pré-reservas',
         'url' => 'list-user',
-        'can' => 'user'
+        'can' => 'authorizedUser'
     ],
     [
         'text' => 'Pré-reservas em meu nome',
         'url' => 'list-user-related',
-        'can' => 'user'
+        'can' => 'authorizedUser'
     ],
     [
         'text' => 'Lista de pré-reservas',

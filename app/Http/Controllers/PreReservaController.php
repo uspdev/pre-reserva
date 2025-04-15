@@ -23,25 +23,21 @@ class PreReservaController extends Controller
         return view('form', compact('formHtml'));
     }
 
-    public static function submission(Request $request)
+    public function submission(Request $request)
     {       
-        if(!Gate::allows('authorizedUser')){
-            return redirect(route('form'));
-        }
-        
+        $this->authorize('authorizedUser');
+
         $form = new Form();
         $form->handleSubmission($request);
         
         return redirect(route('list-user'));
     }
 
-    public static function listUser()
+    public function listUser()
     {
         \UspTheme::activeUrl('list-user');
 
-        if(!Gate::allows('authorizedUser')){
-            return redirect(route('form'));
-        }
+        $this->authorize('authorizedUser');
 
         $user = Auth::user();     
         $codpes = $user->codpes;
@@ -51,13 +47,11 @@ class PreReservaController extends Controller
         return view('listUser', compact('submissions', 'user'));
     }
 
-    public static function listUserRelated()
+    public function listUserRelated()
     {
         \UspTheme::activeUrl('list-user-related');
 
-        if(!Gate::allows('authorizedUser')){
-            return redirect(route('form'));
-        }
+        $this->authorize('authorizedUser');
 
         $user = Auth::user();     
         $codpes = $user->codpes;
@@ -67,7 +61,7 @@ class PreReservaController extends Controller
         return view('listUserRelated', compact('submissions', 'user'));
     }
 
-    public static function listAll()
+    public function listAll()
     {
         \UspTheme::activeUrl('list-all');
 
@@ -80,8 +74,10 @@ class PreReservaController extends Controller
         return view('listAll', compact('submissions'));
     }
 
-    public static function showSubmission($id)
+    public function showSubmission($id)
     {
+        $this->authorize('authorizedUser');
+
         $codpes = Auth::user()->codpes;
         $form = new Form();
         $submission = $form->getSubmission($id);
@@ -95,10 +91,12 @@ class PreReservaController extends Controller
     }
 
 
-    public static function editSubmission($id)
+    public function editSubmission($id)
     {
+        $this->authorize('authorizedUser');
+
         $codpes = Auth::user()->codpes;
-        $form = new Form();
+        $form = new Form(['key' => $codpes]);
         $submission = $form->getSubmission($id);
 
         if (!Gate::allows('admin') && !Gate::allows('manager') && 
@@ -110,12 +108,16 @@ class PreReservaController extends Controller
         return view('form', compact('formHtml', 'submission'));
     }
 
-    public static function updateSubmission(Request $request, $id)
+    public function updateSubmission(Request $request, $id)
     {
+        $this->authorize('authorizedUser');
+
         $config['editable'] = true;
+        $codpes = Auth::user()->codpes;
+        $config['key'] = $codpes;
+
         $form = new Form($config);
 
-        $codpes = Auth::user()->codpes;
         $submission = $form->getSubmission($id);
         if (!Gate::allows('admin') && !Gate::allows('manager') && 
             $submission->key != $codpes && $submission->data['professor'] != $codpes) {
@@ -127,8 +129,9 @@ class PreReservaController extends Controller
         return redirect(route('form.show', ['id' => $id]));
     }
 
-    public static function deleteSubmission($id)
+    public function deleteSubmission($id)
     {
+        $this->authorize('authorizedUser');
         $form = new Form();
         
         $codpes = Auth::user()->codpes;
