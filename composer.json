@@ -1,17 +1,22 @@
 {
-    "name": "uspdev/starter",
+    "name": "uspdev/prereserva",
     "type": "project",
-    "description": "Esqueleto para nova aplicação Uspdev",
+    "description": "Aplicação para gerencimento de pré-reservas de salas informatizadas da STI",
     "authors": [
         {
             "name": "Masaki Kawabata Neto",
             "email": "kawabata@usp.br",
             "homepage": "https://github.com/masakik"
+        },
+        {
+            "name": "Antonio Augusto de Campos",
+            "email": "campos.antonio@usp.br",
+            "homepage": "https://github.com/antonioacampos"
         }
     ],
     "keywords": [
         "uspdev",
-        "starter"
+        "prereserva"
     ],
     "license": "MIT",
     "require": {
