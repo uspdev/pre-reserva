@@ -1,5 +1,5 @@
 {
-    "name": "uspdev/prereserva",
+    "name": "uspdev/pre-reserva",
     "type": "project",
     "description": "Aplicação para gerencimento de pré-reservas de salas informatizadas da STI",
     "authors": [
@@ -16,7 +16,7 @@
     ],
     "keywords": [
         "uspdev",
-        "prereserva"
+        "pre-reserva"
     ],
     "license": "MIT",
     "require": {

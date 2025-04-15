@@ -1,4 +1,4 @@
-# Prereserva
+# Pré-reserva
 Aplicação para gerencimento de pré-reservas de salas informatizadas da STI.
 
 ## Funcionalidades
@@ -28,7 +28,7 @@ php artisan migrate
 ## Instalação
 
 ```sh
-git clone git@github.com:uspdev/prereserva
+git clone git@github.com:uspdev/pre-reserva
 composer install
 cp .env.example .env
 php artisan key:generate
