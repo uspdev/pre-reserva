@@ -27,8 +27,7 @@ class PreReservaController extends Controller
     {       
         $this->authorize('authorizedUser');
 
-        $form = new Form();
-        $form->handleSubmission($request);
+        $submission = (new Form(['editable' => true]))->handleSubmission($request);
         
         return redirect(route('list-user'));
     }
