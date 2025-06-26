@@ -7,6 +7,7 @@ use Uspdev\Forms\Models\FormSubmission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Services\PrereservaMail;
 
 class PreReservaController extends Controller
 {
@@ -28,7 +29,8 @@ class PreReservaController extends Controller
         $this->authorize('authorizedUser');
 
         $submission = (new Form(['editable' => true]))->handleSubmission($request);
-        
+        PrereservaMail::createdMessage($submission);
+
         return redirect(route('list-user'));
     }
 
@@ -163,6 +165,9 @@ class PreReservaController extends Controller
 
         $newRequest = Request::create('/fake-url', 'POST', $requestData);
         $form->handleSubmission($newRequest, $id);
+
+        $submission = $form->getSubmission($id);
+        PrereservaMail::avaliatedMessage($submission);
 
         return redirect()->back();
     }

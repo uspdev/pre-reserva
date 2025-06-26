@@ -60,9 +60,7 @@ $menu = [
 
 $right_menu = [
     [
-        'text' => '<span class="text-danger">Formulários</span>',
-        'url' => 'uspdev-forms/form-definitions',
-        'can' => 'admin'
+        'key' => 'uspdev-forms',
     ],
     [
         // menu utilizado para views da biblioteca senhaunica-socialite.
