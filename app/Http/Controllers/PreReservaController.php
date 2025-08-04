@@ -29,7 +29,7 @@ class PreReservaController extends Controller
         $this->authorize('authorizedUser');
 
         $submission = (new Form(['editable' => true]))->handleSubmission($request);
-        PrereservaMail::createdMessage($submission);
+        PrereservaMail::createdMessage($submission); // É necessário configurar o email de gerência no .env
 
         return redirect(route('list-user'));
     }

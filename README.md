@@ -9,6 +9,7 @@ Este projeto tem como objetivo possibilitar a pré-reserva de uma das três sala
 ## Funcionalidades
 
 * Receber pré-reservas para as salas
+* Envio de e-mails para gerentes e autores das solicitações (configurar e-mail de gerência no .env)
 * Visualizar as pré-reservas
 * Gerenciar as pré-reservas (aceitar e designar uma sala ou não aceitar)
 * Editar e excluir pré-reservas
