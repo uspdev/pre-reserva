@@ -1,4 +1,5 @@
-<table class="table datatable-simples responsive table-stripped table-sm table-bordered table-hover mb-3 dt-fixed-header">
+<table
+  class="table datatable-simples responsive table-stripped table-sm table-bordered table-hover mb-3 dt-fixed-header">
   <thead>
     <tr>
       <th>ID</th>
@@ -76,33 +77,33 @@
               @endif
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <form action="{{ route('form.accept', ['id' => $submission->id]) }}" method="POST"
-                    class="d-flex flex-column">
-                    @csrf
-                    @method('POST')
-                    @if ($aceito !== 'accepted')
-                      <button type="submit" name="accepted" value="accepted-g1" class="btn btn-success btn-sm m-1">
-                        <i class="fas fa-thumbs-up"></i> G1
-                      </button>
-                      <button type="submit" name="accepted" value="accepted-g2" class="btn btn-success btn-sm m-1">
-                        <i class="fas fa-thumbs-up"></i> G2
-                      </button>
-                      <button type="submit" name="accepted" value="accepted-g3" class="btn btn-success btn-sm m-1">
-                        <i class="fas fa-thumbs-up"></i> G3
-                      </button>
-                    @endif
-                    @if ($aceito === 'not-avaliated' || $aceito !== 'not-accepted')
-                      <button type="submit" name="accepted" value="not-accepted" class="btn btn-warning btn-sm m-1">
-                        <i class="fas fa-thumbs-down"></i>
-                      </button>
-                    @endif
+                <form action="{{ route('form.accept', ['id' => $submission->id]) }}" method="POST"
+                  class="d-flex flex-column">
+                  @csrf
+                  @method('POST')
+                  @if ($aceito !== 'accepted')
+                    <button type="submit" name="accepted" value="accepted-g1" class="btn btn-success btn-sm m-1">
+                      <i class="fas fa-thumbs-up"></i> G1
+                    </button>
+                    <button type="submit" name="accepted" value="accepted-g2" class="btn btn-success btn-sm m-1">
+                      <i class="fas fa-thumbs-up"></i> G2
+                    </button>
+                    <button type="submit" name="accepted" value="accepted-g3" class="btn btn-success btn-sm m-1">
+                      <i class="fas fa-thumbs-up"></i> G3
+                    </button>
+                  @endif
+                  @if ($aceito === 'not-avaliated' || $aceito !== 'not-accepted')
+                    <button type="submit" name="accepted" value="not-accepted" class="btn btn-warning btn-sm m-1">
+                      <i class="fas fa-thumbs-down"></i>
+                    </button>
+                  @endif
 
-                    @if ($aceito !== 'not-avaliated')
-                      <button type="submit" name="accepted" value="not-avaliated" class="btn btn-secondary btn-sm m-1">
-                        <i class="fas fa-calendar-minus"></i>
-                      </button>
-                    @endif
-                  </form>
+                  @if ($aceito !== 'not-avaliated')
+                    <button type="submit" name="accepted" value="not-avaliated" class="btn btn-secondary btn-sm m-1">
+                      <i class="fas fa-calendar-minus"></i>
+                    </button>
+                  @endif
+                </form>
               </div>
             </div>
           @else
@@ -119,6 +120,9 @@
         </td>
         <td>
           <div class="d-flex justify-content-start align-items-center">
+            <a href="{{ route('form.show', ['id' => $submission->id]) }}" class="btn btn-success btn-sm mt-2 mr-2 p-2 d-flex">
+              <i class="fas fa-eye"></i>
+            </a>
             <form action="{{ route('form.delete', ['id' => $submission->id]) }}" method="POST" class="mr-2 d-flex">
               @csrf
               @method('DELETE')
@@ -128,7 +132,8 @@
               </button>
             </form>
 
-            <a href="{{ route('form.edit', ['id' => $submission->id]) }}" class="btn btn-primary btn-sm mt-2 p-2 d-flex">
+            <a href="{{ route('form.edit', ['id' => $submission->id]) }}"
+              class="btn btn-primary btn-sm mt-2 p-2 d-flex">
               <i class="fas fa-pencil-alt"></i>
             </a>
           </div>
