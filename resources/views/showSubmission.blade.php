@@ -91,16 +91,16 @@
 
     <div class="card-body">
       <div class="row">
-      <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3">
           <label><strong>Solicitante:</strong></label>
           <p class="font-weight-normal">
             {{ \Uspdev\Replicado\Pessoa::nomeCompleto($submission->key) ?? 'Não informado' }}</p>
         </div>
-        
+
         <div class="col-md-6 mb-3">
           <label><strong>Contato:</strong></label>
           <p class="font-weight-normal">
-            {{ \Uspdev\Replicado\Pessoa::retornarEmailUsp($submission->key) ?? 'Email não informado' }} | 
+            {{ \Uspdev\Replicado\Pessoa::retornarEmailUsp($submission->key) ?? 'Email não informado' }} |
             {{ \Uspdev\Replicado\Pessoa::obterRamalUsp($submission->key) ?? 'Ramal não informado' }}</p>
         </div>
 
@@ -180,10 +180,30 @@
           <p class="font-weight-normal">{{ $submission->data['quantidade_aluno'] ?? 'Não informado' }}</p>
         </div>
 
-        <div class="col-md-12 mb-3">
+        <div class="col-md-12">
           <label><strong>Observações:</strong></label>
           <p class="font-weight-normal">{{ $submission->data['obs'] ?? 'Nenhuma observação' }}</p>
         </div>
+      </div>
+    </div>
+    <div class="card mx-3 mb-3">
+      <div class="card-header h5">
+        Histórico de Alterações
+      </div>
+      <div class="card-body">
+        @if ($activities->isEmpty())
+          <p class="font-weight-normal">Nenhuma alteração registrada.</p>
+        @else
+          <ul class="list-inline">
+            @foreach ($activities as $activity)
+              {{ $activity->created_at->format('d/m/Y H:i:s') }} |
+              {!! $activity->description !!}</a>
+              por {{ \App\Models\User::findOrFail($activity->causer_id)->name }}
+              em {{ $activity->properties['agent']['ip'] }}
+              <br>
+            @endforeach
+          </ul>
+        @endif
       </div>
     </div>
   </div>

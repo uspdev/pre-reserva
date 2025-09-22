@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Services\PrereservaMail;
+use Illuminate\Support\Str;
 
 class PreReservaController extends Controller
 {
@@ -87,8 +88,29 @@ class PreReservaController extends Controller
             $submission->key != $codpes && $submission->data['professor'] != $codpes) {
             return redirect(route('list-user'));
         }
+
+        $activities = $form->getSubmissionActivities($id);
+        foreach ($activities as $activity) {
+            $changes = $activity->changes();
+            $aceitoOld = $changes['old']['data']['aceito'] ?? null;
+            $aceitoNew = $changes['attributes']['data']['aceito'] ?? null;
+
+            if ($aceitoOld !== null || $aceitoNew !== null) {
+                $from = ($aceitoOld === null) ? 'Não avaliado' :
+                    (Str::beforeLast($aceitoOld, '-') === 'accepted'
+                        ? 'Aceito - '. ucfirst(Str::afterLast($aceitoOld, '-'))
+                        : ($aceitoOld === 'accepted' ? 'Aceito' : ($aceitoOld === 'not-accepted' ? 'Rejeitado' : ($aceitoOld === 'not-avaliated' ? 'Não avaliado' : $aceitoOld))));
+
+                $to = ($aceitoNew === null) ? 'Não avaliado' :
+                    (Str::beforeLast($aceitoNew, '-') === 'accepted'
+                        ? 'Aceito - '. ucfirst(Str::afterLast($aceitoNew, '-'))
+                        : ($aceitoNew === 'accepted' ? 'Aceito' : ($aceitoNew === 'not-accepted' ? 'Rejeitado' : ($aceitoNew === 'not-avaliated' ? 'Não avaliado' : $aceitoNew))));
+
+                $activity->description = "Status alterado de <strong>{$from}</strong> para <strong>{$to}</strong>";
+            }
+        }
         
-        return view('showSubmission', compact('submission'));
+        return view('showSubmission', compact('submission', 'activities'));
     }
 
 
