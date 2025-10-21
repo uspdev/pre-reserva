@@ -1,7 +1,7 @@
 {
     "name": "uspdev/pre-reserva",
     "type": "project",
-    "description": "Aplicação para gerencimento de pré-reservas de salas informatizadas da STI",
+    "description": "Aplicação para gerencimento de pré-reservas de salas informatizadas da SCINFOR-EESC",
     "authors": [
         {
             "name": "Masaki Kawabata Neto",

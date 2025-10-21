@@ -6,7 +6,7 @@
       Pré-reservas
     </div>
     <div class="card-body">
-      <p>Na STI, existem três salas informatizadas disponíveis para reserva, que também podem ser solicitadas por
+      <p>Na SCINFOR-EESC, existem três salas informatizadas disponíveis para reserva, que também podem ser solicitadas por
         servidores e docentes de outras unidades do campus.</p>
       
       <p>Devido às características específicas de cada uma dessas
