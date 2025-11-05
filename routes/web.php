@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Gate;
 
 Route::get('/', function () {
     if (Gate::allows('authorizedUser')) {
-        return redirect()->route('list-user-related');
+        return redirect()->route('form');
     }
     else{
         return view('welcome');
